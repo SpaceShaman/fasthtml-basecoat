@@ -1,0 +1,26 @@
+name: Tests
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uv run --group dev python -m scripts.generate
+      - run: uv build --no-sources
+      - run: |
+          uv pip install --group dev dist/*.whl
+          uv run --no-project python -m pytest -q
+          uv run --no-project ruff check src scripts tests hatch_build.py
