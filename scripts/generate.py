@@ -23,7 +23,7 @@ def read_version(root):
 
 
 def download_archive(url, destination, integrity=None):
-    request = Request(url, headers={"User-Agent": "fasthtml-basecoat"})
+    request = Request(url, headers={"User-Agent": "fasthtml-basecoatui"})
     with urlopen(request, timeout=60) as response:
         content = response.read()
     if integrity:

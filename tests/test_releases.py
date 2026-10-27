@@ -27,9 +27,9 @@ def test_npm_controls_versions_and_only_missing_releases_are_published(
             return io.BytesIO(b'{"version": "1.1.0"}')
         if state in {"new", "post"}:
             raise HTTPError(url, 404, "Not found", None, None)
-        names = ["fasthtml_basecoat-1.1.0.tar.gz"]
+        names = ["fasthtml_basecoatui-1.1.0.tar.gz"]
         if state == "published":
-            names.append("fasthtml_basecoat-1.1.0-py3-none-any.whl")
+            names.append("fasthtml_basecoatui-1.1.0-py3-none-any.whl")
         return io.BytesIO(
             json.dumps({"urls": [{"filename": name} for name in names]}).encode()
         )
@@ -52,6 +52,7 @@ def test_npm_controls_versions_and_only_missing_releases_are_published(
     }
     assert bool(commands) == (state == "new")
     assert requests[0] == "https://registry.npmjs.org/basecoat-css/latest"
+    assert requests[1] == f"https://pypi.org/pypi/fasthtml-basecoatui/{expected}/json"
     assert not any("github" in url for url in requests)
 
 

@@ -11,7 +11,7 @@ from urllib.request import urlopen
 def published_files(version):
     try:
         with urlopen(
-            f"https://pypi.org/pypi/fasthtml-basecoat/{version}/json", timeout=30
+            f"https://pypi.org/pypi/fasthtml-basecoatui/{version}/json", timeout=30
         ) as response:
             return {item["filename"] for item in json.load(response)["urls"]}
     except HTTPError as error:
@@ -34,8 +34,8 @@ def main():
         subprocess.run(["uv", "version", latest, "--frozen", "--no-sync"], check=True)
         current = latest
     expected = {
-        f"fasthtml_basecoat-{current}-py3-none-any.whl",
-        f"fasthtml_basecoat-{current}.tar.gz",
+        f"fasthtml_basecoatui-{current}-py3-none-any.whl",
+        f"fasthtml_basecoatui-{current}.tar.gz",
     }
     release = not expected <= published_files(current)
     with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:

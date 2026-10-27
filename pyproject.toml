@@ -1,5 +1,5 @@
 [project]
-name = "fasthtml-basecoat"
+name = "fasthtml-basecoatui"
 version = "1.1.0"
 description = "Basecoat components and bundled assets for FastHTML."
 readme = "README.md"
@@ -22,10 +22,10 @@ classifiers = [
 dependencies = ["fasthtml-tailwindcss>=4.3.3.post1", "python-fasthtml>=0.14.14"]
 
 [project.urls]
-Documentation = "https://github.com/SpaceShaman/fasthtml-basecoat#readme"
-Homepage = "https://github.com/SpaceShaman/fasthtml-basecoat"
-Issues = "https://github.com/SpaceShaman/fasthtml-basecoat/issues"
-Repository = "https://github.com/SpaceShaman/fasthtml-basecoat"
+Documentation = "https://github.com/SpaceShaman/fasthtml-basecoatui#readme"
+Homepage = "https://github.com/SpaceShaman/fasthtml-basecoatui"
+Issues = "https://github.com/SpaceShaman/fasthtml-basecoatui/issues"
+Repository = "https://github.com/SpaceShaman/fasthtml-basecoatui"
 
 [dependency-groups]
 dev = ["beautifulsoup4>=4.13", "fasthtml-tailwindcss[dev]>=4.3.3.post1,<5", "hatchling>=1.27", "httpx", "pytest>=8", "ruff", "tinycss2>=1.4"]

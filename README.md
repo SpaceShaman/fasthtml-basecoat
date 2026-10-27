@@ -1,9 +1,9 @@
-# fasthtml-basecoat
+# fasthtml-basecoatui
 
-[![License](https://img.shields.io/github/license/SpaceShaman/fasthtml-basecoat)](LICENSE)
-[![PyPI](https://img.shields.io/pypi/v/fasthtml-basecoat)](https://pypi.org/project/fasthtml-basecoat/)
-[![Python](https://img.shields.io/pypi/pyversions/fasthtml-basecoat)](https://pypi.org/project/fasthtml-basecoat/)
-[![Release](https://img.shields.io/github/actions/workflow/status/SpaceShaman/fasthtml-basecoat/release.yml?label=release)](https://github.com/SpaceShaman/fasthtml-basecoat/actions/workflows/release.yml)
+[![License](https://img.shields.io/github/license/SpaceShaman/fasthtml-basecoatui)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/fasthtml-basecoatui)](https://pypi.org/project/fasthtml-basecoatui/)
+[![Python](https://img.shields.io/pypi/pyversions/fasthtml-basecoatui)](https://pypi.org/project/fasthtml-basecoatui/)
+[![Release](https://img.shields.io/github/actions/workflow/status/SpaceShaman/fasthtml-basecoatui/release.yml?label=release)](https://github.com/SpaceShaman/fasthtml-basecoatui/actions/workflows/release.yml)
 [![FastHTML](https://img.shields.io/badge/framework-FastHTML-7854F7)](https://github.com/AnswerDotAI/fasthtml)
 [![Basecoat](https://img.shields.io/badge/UI-Basecoat-18181B)](https://basecoatui.com/)
 
@@ -16,13 +16,13 @@ Typed Python components generated from [Basecoat](https://basecoatui.com/), with
 - With uv:
 
   ```sh
-  uv add fasthtml-basecoat
+  uv add fasthtml-basecoatui
   ```
 
 - With pip:
 
   ```sh
-  pip install fasthtml-basecoat
+  pip install fasthtml-basecoatui
   ```
 
 For development and CSS builds, also install the Tailwind compiler:
@@ -31,7 +31,7 @@ For development and CSS builds, also install the Tailwind compiler:
 uv add "fasthtml-tailwindcss[dev]"
 ```
 
-Or `pip install "fasthtml-tailwindcss[dev]"`. Production only needs `fasthtml-basecoat` and the generated CSS. Alpine Linux also requires `apk add --no-cache libstdc++ libgcc` when using the compiler.
+Or `pip install "fasthtml-tailwindcss[dev]"`. Production only needs `fasthtml-basecoatui` and the generated CSS. Alpine Linux also requires `apk add --no-cache libstdc++ libgcc` when using the compiler.
 
 ## Usage
 
@@ -167,7 +167,7 @@ Generate assets first when building from a Git checkout; the build stops if they
 
 A daily [Release workflow](.github/workflows/release.yml) checks `basecoat-css` on npm. A new stable npm version triggers regeneration, wheel tests, and publication to PyPI. GitHub supplies only the matching source tag; it does not determine the released version.
 
-Configure PyPI Trusted Publishing for repository `SpaceShaman/fasthtml-basecoat`, workflow `release.yml`, and environment `pypi`. The workflow needs permission to commit generated files and version updates to the default branch.
+Configure PyPI Trusted Publishing for repository `SpaceShaman/fasthtml-basecoatui`, workflow `release.yml`, and environment `pypi`. The workflow needs permission to commit generated files and version updates to the default branch.
 
 ### Manual releases
 

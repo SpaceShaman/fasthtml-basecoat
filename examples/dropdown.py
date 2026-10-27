@@ -29,13 +29,13 @@ def get():
                     A("Documentation", href="https://basecoatui.com/", role="menuitem"),
                     A(
                         "Source code",
-                        href="https://github.com/SpaceShaman/fasthtml-basecoat",
+                        href="https://github.com/SpaceShaman/fasthtml-basecoatui",
                         role="menuitem",
                     ),
                     Separator(),
                     A(
                         "Report an issue",
-                        href="https://github.com/SpaceShaman/fasthtml-basecoat/issues",
+                        href="https://github.com/SpaceShaman/fasthtml-basecoatui/issues",
                         role="menuitem",
                     ),
                     id="resources-menu",
