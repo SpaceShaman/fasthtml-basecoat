@@ -14,3 +14,4 @@ dist/
 .pypirc
 .fasthtml-tailwindcss/
 /src/fasthtml_basecoat/assets/
+/examples/static/

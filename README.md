@@ -58,6 +58,26 @@ Run `uv run uvicorn main:app --reload`. For `app/main.py`, run `uv run --directo
 
 `TailwindHead` creates `static/`, writes CSS to `static/tailwind.css`, and adds a content-versioned stylesheet link for browser caching. Compilation starts on the first page render. The watcher rebuilds CSS as your classes change and survives server reloads; refresh the browser to see updates.
 
+### Examples
+
+Each file in [examples](examples) is a standalone application following Basecoat's HTML structure, with local CSS and JavaScript:
+
+- [Contact form](examples/form.py) — fields, validation, and form submission.
+- [Workspace cards](examples/cards.py) — cards, badges, progress, and theme switching.
+- [Settings tabs](examples/tabs.py) — accessible tabs and panels.
+- [Profile dialog](examples/dialog.py) — a native modal with an editable field.
+- [FAQ accordion](examples/accordion.py) — expandable questions and answers.
+- [Invoice table](examples/table.py) — a responsive table with status badges.
+- [Preferences](examples/preferences.py) — a native select, slider, and switch.
+
+With the development dependencies installed, run an example from the project directory:
+
+```sh
+uv run --directory examples uvicorn form:app --reload
+```
+
+Replace `form` with any example's filename without `.py`, or copy an example into `main.py` and run `uv run uvicorn main:app --reload`.
+
 ### Components
 
 Components accept children, `cls`, a `tag` override, and standard [FastHTML](https://github.com/AnswerDotAI/fasthtml) attributes. Variants and sizes have explicit `Literal` types for editor autocomplete and type checking; invalid values also raise `ValueError`.

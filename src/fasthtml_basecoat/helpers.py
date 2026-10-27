@@ -71,11 +71,9 @@ def _icon(*children, cls: str = "", **attrs):
 def Spinner(*, cls: str = "", **attrs):
     attrs.setdefault("role", "status")
     attrs.setdefault("aria_label", "Loading")
-    attrs.setdefault("width", 16)
-    attrs.setdefault("height", 16)
     return _icon(
         Circle(cx=12, cy=12, r=9, stroke_dasharray="42 14"),
-        cls=f"shrink-0 animate-spin {cls}".strip(),
+        cls=f"size-4 shrink-0 animate-spin {cls}".strip(),
         **attrs,
     )
 
@@ -104,6 +102,6 @@ def ThemeSwitcher(*, cls: str = "", **attrs):
             ),
             cls="block dark:hidden",
         ),
-        cls=cls,
+        cls=f"size-8 {cls}".strip(),
         **attrs,
     )
