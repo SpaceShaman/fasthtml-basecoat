@@ -69,6 +69,11 @@ Each file in [examples](examples) is a standalone application following Basecoat
 - [FAQ accordion](examples/accordion.py) — expandable questions and answers.
 - [Invoice table](examples/table.py) — a responsive table with status badges.
 - [Preferences](examples/preferences.py) — a native select, slider, and switch.
+- [Resource dropdown](examples/dropdown.py) — a dropdown menu with navigation links.
+- [Dimensions popover](examples/popover.py) — editable fields inside a popover.
+- [Toast notifications](examples/toast.py) — server-rendered notifications through HTMX.
+- [Search input](examples/search.py) — an input group with a keyboard hint and query handling.
+- [Empty state](examples/empty.py) — replace an empty state with a card through HTMX.
 
 With the development dependencies installed, run an example from the project directory:
 
