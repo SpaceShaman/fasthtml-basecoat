@@ -49,8 +49,9 @@ def test_generation_is_repeatable_and_contains_local_assets(upstream, tmp_path):
     assert report["components"] == ["Button", "Card", "CardAction", "Switch", "Tabs"]
     assert report["skipped"] == []
     assert (
-        output / "assets/css/nova.css"
-    ).read_text() == '@import "tailwindcss";\n@import "./basecoat-nova.bundle.css";\n'
+        (output / "assets/css/nova.css").read_text()
+        == '@import "tailwindcss";\n@import "./basecoat-nova.bundle.css";\n@source "../../helpers.py";\n'
+    )
     assert (output / "assets/js/all.min.js").is_file()
     assert (output.parents[1] / "BASECOAT-LICENSE").read_text() == "MIT"
     assert generate(*upstream, destination=output) == report
@@ -89,6 +90,17 @@ def test_unsupported_documentation_is_reported(upstream):
     )
     _, skipped = parse_components(source)
     assert skipped == ["unknown"]
+
+
+def test_chart_is_not_exposed_without_its_javascript_integration(upstream):
+    source, _ = upstream
+    (source / "src/css/components/chart.css").write_text(".chart { color: red; }")
+    (source / "site/src/docs/components/chart.mdx").write_text(
+        '## HTML structure\n<dl><dt><code>&lt;div class="chart"&gt;</code></dt><dd>Chart.</dd></dl>'
+    )
+    components, skipped = parse_components(source)
+    assert "chart" in skipped
+    assert "Chart" not in {item.name for item in components}
 
 
 def test_npm_integrity_is_checked_before_extraction(tmp_path, monkeypatch):

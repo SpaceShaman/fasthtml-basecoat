@@ -42,8 +42,8 @@ from fasthtml_basecoat import BasecoatInput, BasecoatJS, Button
 
 app = FastHTML(
     hdrs=[
-        TailwindHead(input=BasecoatInput("nova"), watch=True),
         BasecoatJS(),
+        TailwindHead(input=BasecoatInput("nova"), watch=True),
     ]
 )
 app.mount("/static", StaticImmutable(directory="static"), name="static")
@@ -69,7 +69,15 @@ from fasthtml_basecoat import Card
 Card(Header(H2("Account")), Section("Your account details"), size="sm")
 ```
 
-Use native HTML elements for component children. See [Basecoat's component documentation](https://basecoatui.com/) for markup and behavior. The [generation report](generation.json) lists available wrappers and omitted components that need native markup or additional integration.
+Use native HTML elements for component children. See [Basecoat's component documentation](https://basecoatui.com/) for markup and behavior.
+
+Tooltips work through attributes on any component:
+
+```python
+Button("Save", data_tooltip="Save your changes", data_side="bottom")
+```
+
+Chart is not supported yet. Chart.js integration is planned for a future release; Chart.js and Basecoat's chart helper are currently not bundled.
 
 ### Styles and JavaScript
 
@@ -77,9 +85,9 @@ Use native HTML elements for component children. See [Basecoat's component docum
 
 The input imports Tailwind and the bundled Basecoat source CSS. Tailwind detects utilities in your application automatically; the imported Basecoat bundle includes its component styles. For custom themes or additional source paths, use the standard `TailwindHead` arguments.
 
-`BasecoatJS()` embeds the bundled `all.min.js` inline and accepts script attributes such as `nonce`. Include it once for interactive components such as dropdowns, selects, and tabs. Chart.js and its Basecoat helper are not included.
+`BasecoatJS()` restores `localStorage.themeMode`, falling back to the system preference, then loads the bundled Basecoat JavaScript inline. Place it before `TailwindHead` to apply the theme before CSS loads. It accepts script attributes such as `nonce`; include it once for interactive components and `ThemeSwitcher`.
 
-Icons are separate. For typed inline SVG icons, see [fasthtml-lucide](https://github.com/SpaceShaman/fasthtml-lucide).
+`Spinner` and `ThemeSwitcher` include their SVGs. For additional typed inline icons, see [fasthtml-lucide](https://github.com/SpaceShaman/fasthtml-lucide).
 
 ### Production
 
@@ -104,7 +112,7 @@ uv run --group dev pytest
 uv run --group dev ruff check src scripts tests hatch_build.py
 ```
 
-The development group includes the generator dependencies and Tailwind compiler. They are not dependencies of the published wrapper.
+The development group includes the generator dependencies and Tailwind compiler. They are not dependencies of the published wrapper. Theme bootstrap tests also use Node.js when available; the application does not require it.
 
 ### Regenerate components and assets
 
@@ -120,7 +128,7 @@ For local upstream sources:
 uv run --group dev python -m scripts.generate --source ../basecoat --package /path/to/extracted/npm/package
 ```
 
-Generated Python components and `generation.json` are committed to this repository. Downloaded CSS and JavaScript stay in the ignored `src/fasthtml_basecoat/assets/` directory. CI regenerates them before building packages.
+Generated Python components and `generation.json` are committed to this repository. Composed helpers live in `helpers.py` and are not overwritten during regeneration. Input stylesheets register their Tailwind classes automatically. Downloaded CSS and JavaScript stay in the ignored `src/fasthtml_basecoat/assets/` directory. CI regenerates them before building packages.
 
 ### Build
 

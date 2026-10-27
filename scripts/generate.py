@@ -12,7 +12,7 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from .parser import parse_component, parse_css
-from .render import render_components, render_init
+from .render import HELPER_NAMES, HELPERS, render_components, render_init
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "src/fasthtml_basecoat"
@@ -57,6 +57,11 @@ def parse_components(source):
     skipped = []
     docs = sorted((source / "site/src/docs/components").glob("*.mdx"))
     for doc in docs:
+        if doc.stem in HELPERS or doc.stem == "tooltip":
+            continue
+        if doc.stem == "chart":
+            skipped.append(doc.stem)
+            continue
         items = parse_component(doc.read_text(encoding="utf-8"), css, slug=doc.stem)
         if not items:
             skipped.append(doc.stem)
@@ -98,7 +103,8 @@ def generate(source, package, destination=PACKAGE, previous=()):
         filename = f"basecoat-{style}.bundle.css"
         shutil.copyfile(package / "dist" / filename, assets / "css" / filename)
         (assets / "css" / f"{style}.css").write_text(
-            f'@import "tailwindcss";\n@import "./{filename}";\n', encoding="utf-8"
+            f'@import "tailwindcss";\n@import "./{filename}";\n@source "../../helpers.py";\n',
+            encoding="utf-8",
         )
     shutil.copyfile(package / "dist/js/all.min.js", assets / "js/all.min.js")
     shutil.copyfile(package / "LICENSE.md", destination.parents[1] / "BASECOAT-LICENSE")
@@ -110,6 +116,8 @@ def generate(source, package, destination=PACKAGE, previous=()):
         "version": version,
         "styles": list(styles),
         "components": [item.name for item in components],
+        "helpers": HELPER_NAMES,
+        "attributes": {"tooltip": "data-tooltip"},
         "skipped": skipped,
     }
     return report
@@ -152,6 +160,7 @@ def main():
         report = generate(source, package, previous=previous.get("components", ()))
     report_file.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(f"Generated {len(report['components'])} components for Basecoat {version}")
+    print(f"Included {len(report['helpers'])} composed helpers")
     for slug in report["skipped"]:
         print(f"Skipped: {slug}")
 

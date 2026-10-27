@@ -2,6 +2,15 @@ import keyword
 
 from .parser import Component
 
+HELPERS = {
+    "pagination": ("Pagination", "PaginationLink"),
+    "scroll-area": ("ScrollArea",),
+    "separator": ("Separator",),
+    "spinner": ("Spinner",),
+    "theme-switcher": ("ThemeSwitcher",),
+}
+HELPER_NAMES = sorted(name for names in HELPERS.values() for name in names)
+
 
 def parameter(attribute):
     name = attribute.removeprefix("data-").replace("-", "_")
@@ -45,6 +54,7 @@ def render_component(item: Component):
 def render_components(components, *, version, styles):
     names = [item.name for item in components]
     reserved = {"BASECOAT_VERSION", "STYLES", "Style", "BasecoatInput", "BasecoatJS"}
+    reserved.update(HELPER_NAMES)
     if len(names) != len(set(names)):
         raise ValueError("Duplicate component name")
     for name in names:
@@ -94,9 +104,15 @@ def render_init(components):
         "from .components import (",
         *(f"    {name}," for name in names),
         ")",
+        "from .helpers import (",
+        *(f"    {name}," for name in HELPER_NAMES),
+        ")",
         "",
         "__all__ = [",
-        *(f"    {name!r}," for name in sorted(names + ["BasecoatInput", "BasecoatJS"])),
+        *(
+            f"    {name!r},"
+            for name in sorted(names + ["BasecoatInput", "BasecoatJS"] + HELPER_NAMES)
+        ),
         "]",
         "",
     ]

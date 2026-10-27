@@ -48,6 +48,14 @@ from .components import (
     Toast,
     ToastContent,
 )
+from .helpers import (
+    Pagination,
+    PaginationLink,
+    ScrollArea,
+    Separator,
+    Spinner,
+    ThemeSwitcher,
+)
 
 __all__ = [
     'Accordion',
@@ -83,20 +91,26 @@ __all__ = [
     'Kbd',
     'Label',
     'NativeSelect',
+    'Pagination',
+    'PaginationLink',
     'Popover',
     'Progress',
     'Radio',
     'STYLES',
+    'ScrollArea',
     'Select',
+    'Separator',
     'Sidebar',
     'Skeleton',
     'Slider',
+    'Spinner',
     'Style',
     'Switch',
     'Table',
     'TableContainer',
     'Tabs',
     'Textarea',
+    'ThemeSwitcher',
     'Toast',
     'ToastContent',
 ]

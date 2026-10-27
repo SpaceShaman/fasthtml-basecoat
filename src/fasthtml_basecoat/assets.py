@@ -5,6 +5,13 @@ from fasthtml.common import Script
 from .components import STYLES, Style
 
 ASSETS = Path(__file__).parent / "assets"
+THEME_INIT = """(() => {
+  let mode;
+  try { mode = localStorage.getItem('themeMode'); } catch (_) {}
+  const dark = mode === 'dark' || (mode !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.classList.toggle('dark', dark);
+})();
+"""
 
 
 def BasecoatInput(style: Style = "vega") -> Path:
@@ -14,4 +21,5 @@ def BasecoatInput(style: Style = "vega") -> Path:
 
 
 def BasecoatJS(**attrs):
-    return Script((ASSETS / "js" / "all.min.js").read_text(encoding="utf-8"), **attrs)
+    code = THEME_INIT + (ASSETS / "js" / "all.min.js").read_text(encoding="utf-8")
+    return Script(code, **attrs)

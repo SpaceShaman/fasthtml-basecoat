@@ -33,6 +33,9 @@ def test_packaged_inputs_compile_with_automatic_application_scanning(
     assert ".bg-primary{" in css
     assert ".text-foreground{" in css
     assert ".btn" in css
+    assert ".overflow-auto" in css
+    assert ".animate-spin" in css
+    assert "dark\\:block" in css
 
 
 def test_javascript_is_bundled_inline_and_accepts_attributes():
@@ -41,6 +44,9 @@ def test_javascript_is_bundled_inline_and_accepts_attributes():
     assert script["nonce"] == "test-nonce"
     assert "src" not in script.attrs
     assert "basecoat" in script.string
+    assert "themeMode" in script.string
+    assert "prefers-color-scheme: dark" in script.string
+    assert script.get("type") != "module"
     assert html.count("</script>") == 1
 
 
@@ -60,11 +66,13 @@ def test_application_serves_compiled_css_and_bundled_javascript(tmp_path, monkey
     monkeypatch.chdir(tmp_path)
     head = TailwindHead(input=BasecoatInput())
     build(head._config)
-    app = FastHTML(sess_cls=None, hdrs=[head, BasecoatJS()])
+    app = FastHTML(sess_cls=None, hdrs=[BasecoatJS(), head])
     app.mount("/static", StaticImmutable(directory="static"), name="static")
     app.route("/")(lambda: Button("Save", variant="outline"))
     with TestClient(app) as browser:
-        page = BeautifulSoup(browser.get("/").text, "html.parser")
+        html = browser.get("/").text
+        assert html.index("themeMode") < html.index("/static/tailwind.css")
+        page = BeautifulSoup(html, "html.parser")
         assert page.button["class"] == ["btn"]
         assert page.button["data-variant"] == "outline"
         link = page.select_one('link[href^="/static/tailwind.css"]')

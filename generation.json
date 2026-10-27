@@ -56,13 +56,18 @@
     "Toast",
     "ToastContent"
   ],
+  "helpers": [
+    "Pagination",
+    "PaginationLink",
+    "ScrollArea",
+    "Separator",
+    "Spinner",
+    "ThemeSwitcher"
+  ],
+  "attributes": {
+    "tooltip": "data-tooltip"
+  },
   "skipped": [
-    "chart",
-    "pagination",
-    "scroll-area",
-    "separator",
-    "spinner",
-    "theme-switcher",
-    "tooltip"
+    "chart"
   ]
 }
